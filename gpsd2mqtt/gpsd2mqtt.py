@@ -255,7 +255,7 @@ while True:
                 continue
 
             # Log the entire result object
-            logger.debug(f"Received GPS data: {result}")
+            logger.debug(f"RAW GPS data: {result}")
 
             if result.get("class") == "SKY":
                 # USat is the current number of satellites used to calculate the position - the more the better
@@ -304,7 +304,7 @@ while True:
                     result["latitude"] = result.pop("lat")
 
                 # Log the modified result object
-                logger.debug(f"Modified TPV data: {result}")
+                logger.debug(f"Processed TPV data: {result}")
 
                 # Limit the GPS updates to the configured value, or publish all if disabled (0)
                 if (datetime.datetime.now() - last_publish_time).total_seconds() >= publish_interval or publish_interval == 0:
