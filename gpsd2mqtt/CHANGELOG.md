@@ -1,5 +1,9 @@
 # Changelog
 
+## [2024.8.0b0] - 2024-08-10
+ - Added logging to check if all attributes received gets published to MQTT
+ - Merged upstream PR changes
+
 ## [2024.7.0] - 2024-07-25
  - Changes done to Apparmor to fix permissions error causing problem for certain USB GPS devices
  - Removed settings for sock, should not be needed

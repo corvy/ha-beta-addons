@@ -248,8 +248,15 @@ while True:
         accuracy = None # Initialize variable, to ensure no error
 
         for raw_result in gps_client.json_stream():
-            result = json.loads(raw_result)
-            
+            try:
+                result = json.loads(raw_result)
+            except json.JSONDecodeError as e:
+                logger.error(f"Failed to decode JSON: {e}")
+                continue
+
+            # Log the entire result object
+            logger.debug(f"Received GPS data: {result}")
+
             if result.get("class") == "SKY":
                 # USat is the current number of satellites used to calculate the position - the more the better
                 n_satellites = result.get("uSat", 0)
@@ -265,7 +272,8 @@ while True:
                     tpv_publish_flag = False
 
                 logger.debug(f"Number of satellites: {n_satellites} of required {min_n_satellites}")
-
+                logger.debug(f"Published SKY: {result} to topic: {mqtt_sky_attr}")
+ 
                 # Publish SKY data
                 if (datetime.datetime.now() - last_publish_time).total_seconds() >= publish_interval or publish_interval == 0:
                     client.publish(mqtt_sky_attr, json.dumps(result))
@@ -294,6 +302,9 @@ while True:
                     result["longitude"] = result.pop("lon")
                 if "lat" in result and result["lat"] is not None:
                     result["latitude"] = result.pop("lat")
+
+                # Log the modified result object
+                logger.debug(f"Modified TPV data: {result}")
 
                 # Limit the GPS updates to the configured value, or publish all if disabled (0)
                 if (datetime.datetime.now() - last_publish_time).total_seconds() >= publish_interval or publish_interval == 0:
