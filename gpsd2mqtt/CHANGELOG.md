@@ -4,6 +4,7 @@
  - Added optional debug logging to check if all attributes received gets published to MQTT
  - Added logic to make sure attributes track and magtrack does not expire in Home Assistant even if not reported for an extended period, this can happen if the GPS is stationary
  - Merged upstream PR changes
+ - Change to fix that disabling the interval for publishing updates defaulted to 10 (setting config option to 0)
 
 ## [2024.7.0] - 2024-07-25
  - Changes done to Apparmor to fix permissions error causing problem for certain USB GPS devices
