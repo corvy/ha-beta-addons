@@ -1,7 +1,8 @@
 # Changelog
 
-## [2024.8.0b0] - 2024-08-10
- - Added logging to check if all attributes received gets published to MQTT
+## [2024.8.0b0] - 2024-08-12
+ - Added optional debug logging to check if all attributes received gets published to MQTT
+ - Added logic to make sure attributes track and magtrack does not expire in Home Assistant even if not reported for an extended period, this can happen if the GPS is stationary
  - Merged upstream PR changes
 
 ## [2024.7.0] - 2024-07-25

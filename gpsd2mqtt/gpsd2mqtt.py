@@ -52,6 +52,8 @@ published_updates = 0
 last_summary_time = datetime.datetime.now()
 last_publish_time = datetime.datetime.now()
 result = None
+last_known_track = None # Variable to store track (and magtrack) on TPV sensor, to make sure it behaves persistent
+last_known_magtrack = None
 
 # Define parameters for exponential backoff
 RECONNECT_DELAY_BASE = 5  # Initial delay in seconds
@@ -303,9 +305,16 @@ while True:
                 if "lat" in result and result["lat"] is not None:
                     result["latitude"] = result.pop("lat")
 
-                # Log the modified result object
-                logger.debug(f"Processed TPV data: {result}")
+                # Track and magtrack are reported when GPSD starts, but will stop reporting when the GPS is stationary.
+                # This will report 'null', but still send the attribute so it does not get expired in Home Assistant.
+                if "track" not in result:
+                    result["track"] = None 
 
+                if "magtrack" not in result:
+                    result["magtrack"] = None
+
+                logger.debug(f"Processed TPV Data: {result}")
+            
                 # Limit the GPS updates to the configured value, or publish all if disabled (0)
                 if (datetime.datetime.now() - last_publish_time).total_seconds() >= publish_interval or publish_interval == 0:
 
