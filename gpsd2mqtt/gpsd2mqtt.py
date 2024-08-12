@@ -52,8 +52,6 @@ published_updates = 0
 last_summary_time = datetime.datetime.now()
 last_publish_time = datetime.datetime.now()
 result = None
-last_known_track = None # Variable to store track (and magtrack) on TPV sensor, to make sure it behaves persistent
-last_known_magtrack = None
 
 # Define parameters for exponential backoff
 RECONNECT_DELAY_BASE = 5  # Initial delay in seconds
