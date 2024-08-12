@@ -47,7 +47,8 @@ min_n_satellites = data.get("min_n_satellites") or 0 # Default to 0 (all results
 debug = data.get("debug", False)
 # Variables used to publish updates to the
 summary_interval = data.get("summary_interval") or 120 # Interval in seconds
-publish_interval = data.get("publish_interval") or 10 # Interval in seconds
+if publish_interval is None:
+    publish_interval = 10  # Default to 10 Interval in seconds
 published_updates = 0
 last_summary_time = datetime.datetime.now()
 last_publish_time = datetime.datetime.now()
