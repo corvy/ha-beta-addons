@@ -309,9 +309,11 @@ while True:
                 # This will report 'null', but still send the attribute so it does not get expired in Home Assistant.
                 if "track" not in result:
                     result["track"] = None 
+                    logger.debug(f"Attribute track not in result, setting value to none")
 
                 if "magtrack" not in result:
                     result["magtrack"] = None
+                    logger.debug(f"Attribute magtrack not in result, setting value to none")
 
                 logger.debug(f"Processed TPV Data: {result}")
             
